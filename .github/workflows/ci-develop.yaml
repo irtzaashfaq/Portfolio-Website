@@ -1,0 +1,28 @@
+name: ci-develop
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install linters
+        run: npm install -g htmlhint stylelint stylelint-config-standard
+
+      - name: Lint HTML files
+        run: htmlhint "**/*.html"
+
+      - name: Lint CSS files
+        run: stylelint "**/*.css"
